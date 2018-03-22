@@ -27,18 +27,15 @@ public class LaminaInter extends Lamina {
 			lmes = new JLabel("     Informacion");
 	private JCheckBox cb = new JCheckBox("Salida     ");
 
+	// Paneles
+	JPanel grl1p = new JPanel(), grl2p = new JPanel(), grl11p = new JPanel(), grl12p = new JPanel();
+	// Layouts
+	GridLayout grl1 = new GridLayout(2, 1), grl2 = new GridLayout(1, 2);
+
 	private List<File> f1 = new ArrayList<File>(), f2 = new ArrayList<File>();
 
 	public LaminaInter() {
 		Cf.mes = new JTextField("Mensajes", 30);
-		// Layouts
-		GridLayout grl1 = new GridLayout(2, 1);
-		GridLayout grl2 = new GridLayout(1, 2);
-		// Panels
-		JPanel grl1p = new JPanel();
-		JPanel grl2p = new JPanel();
-		JPanel grl11p = new JPanel();
-		JPanel grl12p = new JPanel();
 		// Asignacion de panels
 		this.setLayout(grl1);
 		this.add(grl1p); //
