@@ -55,9 +55,9 @@ public class Ventana extends JFrame {
 
 	public void setLamAct(Lamina lam) {
 		System.out.println("Programa tag");
+		this.getContentPane().add(lam);
 		this.getContentPane().remove(Cf.lamAct);
 		Cf.lamAct = lam;
-		this.getContentPane().add(lam);
 		this.repaint();
 	}
 
