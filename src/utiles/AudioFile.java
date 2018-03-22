@@ -22,6 +22,7 @@ public class AudioFile {
 		this.title = "No title";
 		this.album = "Music";
 		this.artist = "Unknown";
+		this.album = "";
 		String aux = file.getName().split(" - ")[1];
 		this.pathTitle = aux.substring(0, aux.indexOf("."));
 		this.pathArtist = file.getName().split("-")[0].trim();
@@ -32,7 +33,7 @@ public class AudioFile {
 	}
 
 	public void readTags() {
-		System.out.println("------------readTags()-------------");
+		// System.out.println("------------readTags()-------------");
 		this.mediaFile = new MP3File(new File(this.path));
 		try {
 			for (Object obj : mediaFile.getTags()) {
@@ -44,7 +45,7 @@ public class AudioFile {
 		} catch (ID3Exception e1) {
 			System.out.println("Error en la ruta del archivo " + this.path);
 		}
-		System.out.println("------------------------------------");
+		// System.out.println("------------------------------------");
 	}
 
 	private void readID3V1Tags(Object obj) { // Obtiene las etiquetas de ID3v1

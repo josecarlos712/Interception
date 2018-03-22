@@ -3,14 +3,13 @@ package utiles;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import utiles.laminas.Lamina;
 
 public class Cf {
 
-	public static JFrame ven;
+	public static Ventana ven;
 	public static Lamina lamAct;
 	public static String ent1, ent2, out, saveDirectory;
 	public static JTextField mes;
