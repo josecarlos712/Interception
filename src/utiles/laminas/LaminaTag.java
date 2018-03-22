@@ -4,6 +4,9 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -13,7 +16,9 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import utiles.AudioFile;
 import utiles.Cf;
+import utiles.Metodos;
 
 @SuppressWarnings("serial")
 public class LaminaTag extends Lamina {
@@ -25,6 +30,8 @@ public class LaminaTag extends Lamina {
 	JCheckBox albumBlanco = new JCheckBox("Album en blanco");
 	JButton aceptarB = new JButton("Aceptar"), abrirB = new JButton("Abrir");
 	JTextField pathField = new JTextField();
+
+	List<AudioFile> audioList = new ArrayList<AudioFile>();
 
 	public LaminaTag() {
 
@@ -61,7 +68,10 @@ public class LaminaTag extends Lamina {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-
+				for (AudioFile af : audioList) {
+					af.readTags();
+					af.setPathTags();
+				}
 			}
 		});
 
@@ -70,7 +80,11 @@ public class LaminaTag extends Lamina {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
+				List<File> f = Metodos.abrirArchivo(pgrl11);
 
+				for (File fp : f) {
+					audioList.add(new AudioFile(fp.getAbsolutePath()));
+				}
 			}
 		});
 	}

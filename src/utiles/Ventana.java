@@ -54,11 +54,10 @@ public class Ventana extends JFrame {
 	}
 
 	public void setLamAct(Lamina lam) {
-		System.out.println("Programa tag");
 		this.getContentPane().add(lam);
 		this.getContentPane().remove(Cf.lamAct);
 		Cf.lamAct = lam;
-		this.repaint();
+		this.actualizarVentana();
 	}
 
 	public void crearMenu() {
@@ -127,5 +126,12 @@ public class Ventana extends JFrame {
 		 * menu.getAccessibleContext().setAccessibleDescription("This menu does nothing"
 		 * ); menuBar.add(menu);
 		 */
+	}
+
+	public void actualizarVentana() {
+		this.repaint();
+		Rectangle b = this.getBounds();
+		this.setBounds(b.x, b.y, b.height - 1, b.width - 1);
+		this.setBounds(b);
 	}
 }

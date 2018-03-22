@@ -21,8 +21,8 @@ public class LaminaInter extends Lamina {
 	private static final long serialVersionUID = 1L;
 	private JTextField u1 = new JTextField("Entrada 1", 30), u2 = new JTextField("Entrada 2", 30),
 			out = new JTextField("Capeta Salida", 30);
-	private JButton bu1 = JButton("Abrir"), bu2 = JButton("Abrir"), bout = JButton("Abrir"),
-			bint = JButton("Intercepcion");
+	private JButton bu1 = new JButton("Abrir"), bu2 = new JButton("Abrir"), bout = new JButton("Abrir"),
+			bint = new JButton("Intercepcion");
 	private JLabel lu1 = new JLabel("Entrada 1"), lu2 = new JLabel("Entrada 2"), luout = new JLabel("     Salida"),
 			lmes = new JLabel("     Informacion");
 	private JCheckBox cb = new JCheckBox("Salida     ");
@@ -108,11 +108,5 @@ public class LaminaInter extends Lamina {
 				Cf.mes.setText("Archivos copiados");
 			}
 		});
-
-	}
-
-	private JButton JButton(String text) {
-		// TODO Auto-generated method stub
-		return new JButton(text);
 	}
 }
