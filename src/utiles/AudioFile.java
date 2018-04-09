@@ -11,29 +11,33 @@ import org.blinkenlights.jid3.v2.ID3V2_3_0Tag;
 
 public class AudioFile {
 
-	private String path, title, album, artist, format, pathTitle, pathArtist;
+	private String path, title, album, artist, pathTitle, pathArtist;
 	private MediaFile mediaFile;
-	private ID3V2Tag tag = null;
+	private ID3V2Tag tag = new ID3V2_3_0Tag();
 	private File file;
 
 	public AudioFile(String path) {
 		this.file = new File(path);
 		this.path = path;
+		// Tags
 		this.title = "No title";
 		this.album = "Music";
 		this.artist = "Unknown";
 		this.album = "";
+		// Path tags
 		String aux = file.getName().split(" - ")[1];
 		this.pathTitle = aux.substring(0, aux.indexOf("."));
 		this.pathArtist = file.getName().split("-")[0].trim();
-		this.format = aux.substring(aux.indexOf(".") + 1);
+		aux.substring(aux.indexOf(".") + 1);
+
+		System.out.println("pathRute: " + this.path);
 		System.out.println("pathTitle: " + this.pathTitle);
 		System.out.println("pathArtist: " + this.pathArtist);
-		System.out.println("format: " + this.format);
+		// System.out.println("format: " + this.format);
 	}
 
 	public void readTags() {
-		// System.out.println("------------readTags()-------------");
+		System.out.println("------------readTags()-------------");
 		this.mediaFile = new MP3File(new File(this.path));
 		try {
 			for (Object obj : mediaFile.getTags()) {
@@ -45,7 +49,7 @@ public class AudioFile {
 		} catch (ID3Exception e1) {
 			System.out.println("Error en la ruta del archivo " + this.path);
 		}
-		// System.out.println("------------------------------------");
+		System.out.println("------------------------------------");
 	}
 
 	private void readID3V1Tags(Object obj) { // Obtiene las etiquetas de ID3v1
@@ -100,43 +104,55 @@ public class AudioFile {
 	// Setters
 	public void setTitle(String title) {
 		try {
-			tag = this.mediaFile.getID3V2Tag();
-			tag.setTitle(title);
+			ID3V2Tag tag = this.mediaFile.getID3V2Tag();
+			if (tag == null)
+				this.tag = new ID3V2_3_0Tag();
+			else
+				this.tag = tag;
+			this.tag.setTitle(title);
 		} catch (ID3Exception e1) {
 			// TODO Auto-generated catch block
 			System.out.println("Error al cambiar el titulo");
 		}
-		mediaFile.setID3Tag(tag);
+		this.mediaFile.setID3Tag(this.tag);
 		sync();
 	}
 
 	public void setAlbum(String album) {
 		try {
-			tag = this.mediaFile.getID3V2Tag();
-			tag.setAlbum(album);
+			ID3V2Tag tag = this.mediaFile.getID3V2Tag();
+			if (tag == null)
+				this.tag = new ID3V2_3_0Tag();
+			else
+				this.tag = tag;
+			this.tag.setAlbum(album);
 		} catch (ID3Exception e1) {
 			// TODO Auto-generated catch block
 			System.out.println("Error al cambiar el album");
 		}
-		mediaFile.setID3Tag(tag);
+		mediaFile.setID3Tag(this.tag);
 		sync();
 	}
 
 	public void setArtist(String artist) {
 		try {
-			tag = this.mediaFile.getID3V2Tag();
-			tag.setArtist(artist);
+			ID3V2Tag tag = this.mediaFile.getID3V2Tag();
+			if (tag == null)
+				this.tag = new ID3V2_3_0Tag();
+			else
+				this.tag = tag;
+			this.tag.setArtist(artist);
 		} catch (ID3Exception e1) {
 			// TODO Auto-generated catch block
 			System.out.println("Error al cambiar el artista");
 		}
-		mediaFile.setID3Tag(tag);
+		mediaFile.setID3Tag(this.tag);
 		sync();
 	}
 
 	public void sync() {
 		try {
-			mediaFile.sync();
+			this.mediaFile.sync();
 		} catch (ID3Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

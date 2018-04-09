@@ -29,7 +29,7 @@ public class LaminaTag extends Lamina {
 	//
 	JCheckBox albumBlanco = new JCheckBox("Album en blanco");
 	JButton aceptarB = new JButton("Aceptar"), abrirB = new JButton("Abrir");
-	JTextField pathField = new JTextField();
+	JTextField pathField = new JTextField(30);
 
 	List<AudioFile> audioList = new ArrayList<AudioFile>();
 
@@ -84,6 +84,7 @@ public class LaminaTag extends Lamina {
 
 				for (File fp : f) {
 					audioList.add(new AudioFile(fp.getAbsolutePath()));
+					pathField.setText(fp.getAbsolutePath());
 				}
 			}
 		});
