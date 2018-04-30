@@ -9,17 +9,14 @@ import utiles.AudioFileO;
 public class MainAudioFile {
 
 	private static String rute = "C:\\Users\\josec\\Documents\\";
-	private static String name = "Alan Walker - Faded.mp3";
+	private static String name = "Alt-J - Left Hand Free.mp3";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
 		AudioFileO af = new AudioFileO(rute + name);
-		af.readTag();
 
-		af.setAlbum("New um");
-		af.setArtist("New Artist");
-		af.setTitle("New Title");
+		af.setPathTag();
 
 		try {
 			af.sync();

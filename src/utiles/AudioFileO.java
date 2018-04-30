@@ -2,12 +2,10 @@ package utiles;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 
 import org.farng.mp3.MP3File;
 import org.farng.mp3.TagException;
 import org.farng.mp3.id3.AbstractID3v2;
-import org.farng.mp3.id3.AbstractID3v2Frame;
 import org.farng.mp3.id3.ID3v2_3;
 
 public class AudioFileO {
@@ -31,7 +29,7 @@ public class AudioFileO {
 			e.printStackTrace();
 		}
 		// Tags
-		if (song.hasID3v2Tag())
+		if (this.song.hasID3v2Tag())
 			this.tag = song.getID3v2Tag();
 		else
 			this.tag = new ID3v2_3();
@@ -45,46 +43,46 @@ public class AudioFileO {
 		System.out.println("pathRute: " + this.path);
 		System.out.println("pathTitle: " + this.pathTitle);
 		System.out.println("pathArtist: " + this.pathArtist);
-	}
-
-	public void readTag() {
 
 		if (this.song.hasID3v2Tag())
 			this.tag = this.song.getID3v2Tag();
 		else
 			this.tag = new ID3v2_3();
 
+		readTag();
+	}
+
+	public void readTag() {
 		System.out.println("------------readTags()-------------");
 
 		this.title = this.tag.getSongTitle();
 		this.album = this.tag.getAlbumTitle();
 		this.artist = this.tag.getLeadArtist();
-		System.out.println("tag: " + tag.toString());
 
+		System.out.println("Title: " + this.title);
+		System.out.println("Album: " + this.album);
+		System.out.println("Artist: " + this.artist);
+		// System.out.println("tag: " + this.tag.toString());
 		System.out.println("------------------------------------");
 	}
 
-	@SuppressWarnings("rawtypes")
-	public void sync() throws IOException, TagException {
+	public void sync() throws IOException, TagException { // Sincroniza la etiqueta creada con el archivo y lo guarda
 		this.tag.setSongTitle(this.title);
 		this.tag.setAlbumTitle(this.album);
 		this.tag.setLeadArtist(this.artist);
 
-		/*
-		 * this.song.setID3v2Tag(this.tag); song.save();
-		 */
-
-		final Iterator ite = this.tag.iterator();
-		while (ite.hasNext()) {
-			final AbstractID3v2Frame frame = (AbstractID3v2Frame) ite.next();
-			final String identifier = frame.getIdentifier();
-			AbstractID3v2Frame fr = this.tag.getFrame(identifier);
-			// ID3v2_4Frame fr4 = new ID3v2_4Frame(fr);
-			song.setFrameAcrossTags(fr);
-		}
+		this.song.setID3v2Tag(this.tag);
+		this.song.save();
 	}
 
 	// Getters y Setters
+	public void setPathTag() {
+		this.title = this.pathTitle;
+		this.artist = this.pathArtist;
+		if (this.album == null || this.album == "")
+			this.album = "Music";
+	}
+
 	public String getTitle() {
 		return title;
 	}
