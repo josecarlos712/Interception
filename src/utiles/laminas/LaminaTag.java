@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import utiles.AudioFile;
+import utiles.AudioFileO;
 import utiles.Cf;
 import utiles.Metodos;
 
@@ -31,7 +31,7 @@ public class LaminaTag extends Lamina {
 	JButton aceptarB = new JButton("Aceptar"), abrirB = new JButton("Abrir");
 	JTextField pathField = new JTextField(30);
 
-	List<AudioFile> audioList = new ArrayList<AudioFile>();
+	List<AudioFileO> audioList = new ArrayList<AudioFileO>();
 
 	public LaminaTag() {
 
@@ -68,7 +68,7 @@ public class LaminaTag extends Lamina {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				for (AudioFile af : audioList) {
+				for (AudioFileO af : audioList) {
 					af.readTags();
 					af.setPathTags();
 				}
@@ -83,7 +83,7 @@ public class LaminaTag extends Lamina {
 				List<File> f = Metodos.abrirArchivo(pgrl11);
 
 				for (File fp : f) {
-					audioList.add(new AudioFile(fp.getAbsolutePath()));
+					audioList.add(new AudioFileO(fp.getAbsolutePath()));
 					pathField.setText(fp.getAbsolutePath());
 				}
 			}
