@@ -4,17 +4,17 @@ import java.io.IOException;
 
 import org.farng.mp3.TagException;
 
-import utiles.AudioFileO;
+import utiles.elem.AudioFile;
 
 public class MainAudioFile {
 
 	private static String rute = "C:\\Users\\josec\\Documents\\";
-	private static String name = "Alt-J - Left Hand Free.mp3";
+	private static String name = "Guns N' Roses - Paradise City.mp3";
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		AudioFileO af = new AudioFileO(rute + name);
+		AudioFile af = new AudioFile(rute + name);
 
 		af.setPathTag();
 

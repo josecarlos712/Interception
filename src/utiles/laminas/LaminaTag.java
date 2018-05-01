@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,13 +13,15 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import utiles.AudioFileO;
+import org.farng.mp3.TagException;
+
 import utiles.Cf;
 import utiles.Metodos;
+import utiles.elem.AudioFile;
 
 @SuppressWarnings("serial")
 public class LaminaTag extends Lamina {
@@ -28,10 +31,10 @@ public class LaminaTag extends Lamina {
 			pgrl12 = new JPanel();
 	//
 	JCheckBox albumBlanco = new JCheckBox("Album en blanco");
-	JButton aceptarB = new JButton("Aceptar"), abrirB = new JButton("Abrir");
-	JTextField pathField = new JTextField(30);
+	JButton aceptarB = new JButton("Aceptar"), abrirB = new JButton("Abrir"), anadirEl = new JButton("Añadir");
+	JTextArea pathField = new JTextArea(50, 50);
 
-	List<AudioFileO> audioList = new ArrayList<AudioFileO>();
+	List<AudioFile> audioList = new ArrayList<AudioFile>();
 
 	public LaminaTag() {
 
@@ -48,6 +51,7 @@ public class LaminaTag extends Lamina {
 		pgrl11.add(new JLabel("Ruta: "));
 		pgrl11.add(pathField);
 		pgrl11.add(abrirB);
+		pgrl11.add(anadirEl);
 
 		pgrl12.add(albumBlanco);
 
@@ -58,7 +62,7 @@ public class LaminaTag extends Lamina {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				// TODO Auto-generated method stub
+
 				Cf.blankAlbum = albumBlanco.isSelected();
 			}
 		});
@@ -67,26 +71,55 @@ public class LaminaTag extends Lamina {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				for (AudioFileO af : audioList) {
-					af.readTags();
-					af.setPathTags();
+
+				for (AudioFile af : audioList) {
+					af.setPathTag();
+					if (Cf.blankAlbum)
+						af.setAlbum("Music");
+					try {
+						af.sync();
+					} catch (IOException | TagException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					af.readTag();
 				}
 			}
 		});
 
-		abrirB.addActionListener(new ActionListener() {
+		abrirB.addActionListener(new ActionListener() { // Limpia la lista existente y carga los MP3
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				List<File> f = Metodos.abrirArchivo(pgrl11);
-
-				for (File fp : f) {
-					audioList.add(new AudioFileO(fp.getAbsolutePath()));
-					pathField.setText(fp.getAbsolutePath());
-				}
+				audioList.clear();
+				anadirAudioList();
+				actualizarJTextAreaMP3();
 			}
 		});
+
+		anadirEl.addActionListener(new ActionListener() { // Añade a la lista existente los nuevos MP3
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				anadirAudioList();
+				actualizarJTextAreaMP3();
+			}
+		});
+	}
+
+	private void anadirAudioList() {
+		List<File> f = Metodos.abrirArchivo(pgrl11);
+
+		for (File fp : f) {
+			audioList.add(new AudioFile(fp.getAbsolutePath()));
+			pathField.setText(fp.getAbsolutePath());
+		}
+	}
+
+	private void actualizarJTextAreaMP3() {
+
+		for (int i = 0; i < this.audioList.size(); i++) {
+
+		}
 	}
 }

@@ -15,7 +15,7 @@ import javax.swing.KeyStroke;
 
 import utiles.laminas.Lamina;
 import utiles.laminas.LaminaIni;
-import utiles.laminas.LaminaInter;
+import utiles.laminas.LaminaPruebas;
 import utiles.laminas.LaminaTag;
 
 @SuppressWarnings("serial")
@@ -32,8 +32,9 @@ public class Ventana extends JFrame {
 	public Ventana(int x, int y, int width, int height) {
 		// Instanciacion de laminas
 		Cf.mapLam.put("inicial", new LaminaIni());
-		Cf.mapLam.put("intercepcion", new LaminaInter());
-		Cf.mapLam.put("tag", new LaminaTag());
+		Cf.mapLam.put("intercepcion", null);
+		Cf.mapLam.put("tag", null);
+		Cf.mapLam.put("pruebas", null);
 		crearMenu();
 		// Creacion de la ventana
 		this.setBounds(x, y, width, height);
@@ -54,8 +55,8 @@ public class Ventana extends JFrame {
 	}
 
 	public void setLamAct(Lamina lam) {
-		this.getContentPane().add(lam);
 		this.getContentPane().remove(Cf.lamAct);
+		this.getContentPane().add(lam);
 		Cf.lamAct = lam;
 		this.actualizarVentana();
 	}
@@ -70,7 +71,7 @@ public class Ventana extends JFrame {
 		menu.getAccessibleContext().setAccessibleDescription("Menu para elegir entre los programas");
 		menuBar.add(menu);
 
-		// a group of JMenuItems
+		// Añadir menu del programa de Tags
 		menuItem = new JMenuItem("Tags", KeyEvent.VK_T); // Crea una entrada en el menu desplegable
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_T, ActionEvent.ALT_MASK)); // Crea un acceso rapido
 																								// de teclado
@@ -80,52 +81,29 @@ public class Ventana extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				if (Cf.mapLam.get("tag") != null)
-					Cf.ven.setLamAct(Cf.mapLam.get("tag"));
+				if (Cf.mapLam.get("tag") == null)
+					Cf.mapLam.put("tag", new LaminaTag());
+				Cf.ven.setLamAct(Cf.mapLam.get("tag"));
+
 			}
 		});
 		menu.add(menuItem);
+		// Añadir menu del programa de Pruebas
+		menuItem = new JMenuItem("Pruebas", KeyEvent.VK_P); // Crea una entrada en el menu desplegable
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.ALT_MASK)); // Crea un acceso rapido
+																								// de teclado
+		menuItem.getAccessibleContext().setAccessibleDescription("Programa para hacer pruebas");
+		menuItem.addActionListener(new ActionListener() {
 
-		/*
-		 * menuItem = new JMenuItem("Both text and icon", new
-		 * ImageIcon("images/middle.gif")); menuItem.setMnemonic(KeyEvent.VK_B);
-		 * menu.add(menuItem);
-		 * 
-		 * menuItem = new JMenuItem(new ImageIcon("images/middle.gif"));
-		 * menuItem.setMnemonic(KeyEvent.VK_D); menu.add(menuItem);
-		 * 
-		 * // a group of radio button menu items menu.addSeparator(); ButtonGroup group
-		 * = new ButtonGroup(); rbMenuItem = new
-		 * JRadioButtonMenuItem("A radio button menu item");
-		 * rbMenuItem.setSelected(true); rbMenuItem.setMnemonic(KeyEvent.VK_R);
-		 * group.add(rbMenuItem); menu.add(rbMenuItem);
-		 * 
-		 * rbMenuItem = new JRadioButtonMenuItem("Another one");
-		 * rbMenuItem.setMnemonic(KeyEvent.VK_O); group.add(rbMenuItem);
-		 * menu.add(rbMenuItem);
-		 * 
-		 * // a group of check box menu items menu.addSeparator(); cbMenuItem = new
-		 * JCheckBoxMenuItem("A check box menu item");
-		 * cbMenuItem.setMnemonic(KeyEvent.VK_C); menu.add(cbMenuItem);
-		 * 
-		 * cbMenuItem = new JCheckBoxMenuItem("Another one");
-		 * cbMenuItem.setMnemonic(KeyEvent.VK_H); menu.add(cbMenuItem);
-		 * 
-		 * // a submenu menu.addSeparator(); submenu = new JMenu("A submenu");
-		 * submenu.setMnemonic(KeyEvent.VK_S);
-		 * 
-		 * menuItem = new JMenuItem("An item in the submenu");
-		 * menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
-		 * ActionEvent.ALT_MASK)); submenu.add(menuItem);
-		 * 
-		 * menuItem = new JMenuItem("Another item"); submenu.add(menuItem);
-		 * menu.add(submenu);
-		 * 
-		 * // Build second menu in the menu bar. menu = new JMenu("Another Menu");
-		 * menu.setMnemonic(KeyEvent.VK_N);
-		 * menu.getAccessibleContext().setAccessibleDescription("This menu does nothing"
-		 * ); menuBar.add(menu);
-		 */
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				if (Cf.mapLam.get("pruebas") == null)
+					Cf.mapLam.put("pruebas", new LaminaPruebas());
+				Cf.ven.setLamAct(Cf.mapLam.get("pruebas"));
+			}
+		});
+		menu.add(menuItem);
 	}
 
 	public void actualizarVentana() {

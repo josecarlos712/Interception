@@ -1,21 +1,21 @@
-package utiles;
+package utiles.elem;
 
 import java.io.File;
 import java.io.IOException;
 
+import org.farng.mp3.AbstractMP3Tag;
 import org.farng.mp3.MP3File;
 import org.farng.mp3.TagException;
-import org.farng.mp3.id3.AbstractID3v2;
 import org.farng.mp3.id3.ID3v2_3;
 
-public class AudioFileO {
+public class AudioFile {
 
 	private String path, title, album, artist, pathTitle, pathArtist;
 	private org.farng.mp3.MP3File song;
-	private AbstractID3v2 tag;
+	private AbstractMP3Tag tag;
 	private File file;
 
-	public AudioFileO(String path) {
+	public AudioFile(String path) {
 		this.path = path;
 		this.file = new File(this.path);
 
@@ -44,11 +44,6 @@ public class AudioFileO {
 		System.out.println("pathTitle: " + this.pathTitle);
 		System.out.println("pathArtist: " + this.pathArtist);
 
-		if (this.song.hasID3v2Tag())
-			this.tag = this.song.getID3v2Tag();
-		else
-			this.tag = new ID3v2_3();
-
 		readTag();
 	}
 
@@ -63,6 +58,7 @@ public class AudioFileO {
 		System.out.println("Album: " + this.album);
 		System.out.println("Artist: " + this.artist);
 		// System.out.println("tag: " + this.tag.toString());
+		System.out.println("------------------------------------");
 		System.out.println("------------------------------------");
 	}
 
@@ -105,5 +101,9 @@ public class AudioFileO {
 
 	public void setArtist(String artist) {
 		this.artist = artist;
+	}
+
+	public String getNameFile() {
+		return this.file.getName();
 	}
 }
