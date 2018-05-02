@@ -2,6 +2,8 @@ package utiles.laminas;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -18,6 +20,7 @@ public class LaminaPruebas extends Lamina {
 	//
 	private JButton aceptarB = new JButton("Aceptar"), abrirB = new JButton("Abrir"), anadirEl = new JButton("Añadir");
 	private AreaTexto textArea = new AreaTexto(50, 50);
+	private List<String> l = new ArrayList<String>();
 
 	public LaminaPruebas() {
 
@@ -38,7 +41,22 @@ public class LaminaPruebas extends Lamina {
 
 		pgrl2.add(aceptarB);
 
-		this.textArea.reemplazarTextArea("HolaMudno linea 5", 5);
+		//Lista de Strings de prueba
+		l.add("HolaMundo1");
+		l.add("HolaMundo2");
+		l.add("HolaMundo3");
+		l.add("HolaMundo4");
+		//l.add("HolaMundo5");
+		l.add("HolaMundo6");
+		l.add("HolaMundo7");
+		l.add("HolaMundo8");
+		l.add("HolaMundo9");
+		//Fin de lista
 
+		this.textArea.reemplazarLinea("HolaMundo linea 5", 5);
+
+		for (int i = 0; i < l.size(); i++) {
+			this.textArea.reemplazarLinea(i + ". " + l.get(i), i);
+		}
 	}
 }

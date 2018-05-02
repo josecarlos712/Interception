@@ -16,3 +16,12 @@ public class Cf {
 	public static boolean blankAlbum = true;
 	public static Map<String, Lamina> mapLam = new HashMap<String, Lamina>();
 }
+
+/*
+  Error de IndexOutOfBoundsException en AreaTexto en separarEnLineas()
+  
+  
+  
+  
+ 
+  */

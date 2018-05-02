@@ -2,13 +2,12 @@ package utiles.elem;
 
 import java.awt.HeadlessException;
 import java.awt.TextArea;
-import java.util.ArrayList;
-import java.util.List;
 
 public class AreaTexto extends TextArea {
 
+	public static final int MAXLINEAS = 300;
 	private static final long serialVersionUID = 1L;
-	private List<String> t = new ArrayList<String>();
+	protected String[] to = new String[MAXLINEAS];
 
 	public AreaTexto() throws HeadlessException {
 		// TODO Auto-generated constructor stub
@@ -34,32 +33,46 @@ public class AreaTexto extends TextArea {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void reemplazarTextArea(String str, int pos) {
+	public void reemplazarLinea(String str, int pos) {
 
-		String[] t = this.getText().split("\n");
+		separarEnLineas();
 
-		for (String st : t) {
-			this.t.add(st);
+		if (pos < 0) {
+			throw new IllegalArgumentException("Has introducido un numero negativo en reemplazarLinea(" + pos + ")");
+		} else if (pos < 300) {
+			this.to[pos] = str + "\n";
 		}
 
-		if (pos >= 0) {
-			if (pos <= this.t.size()) {
-				this.t.set(pos, str + "\n");
-			} else {
-				for (int i = this.t.size(); i < pos; i++) {
-					this.t.add("\n");
-				}
-				this.t.add(str + "\n");
-			}
-		} else {
-			System.out.println("Has introducido un numero negativo en reemplazarTextArea(" + pos + ")");
-		}
 		refrescarTextArea();
 	}
 
 	public void refrescarTextArea() {
-		for (String line : t) {
-			this.append(line);
+		this.setText("");
+
+		for (String line : this.to) {
+			if (line != null)
+				this.append(line);
+		}
+	}
+
+	public String getLine(int pos) {
+		return this.to[pos];
+	}
+
+	private void separarEnLineas() {
+
+		String texto = this.getText();
+		String[] lineas = texto.split("\n");
+
+		if (lineas.length < 300) {
+			for (int i = 0; i < lineas.length; i++) {
+				this.to[i] = lineas[i] + "\n";
+			}
+		} else {
+			for (int i = 0; i < MAXLINEAS; i++) {
+				this.to[i] = lineas[i] + "\n";
+			}
+			throw new IllegalArgumentException("El texto no puede exceder la 300 lineas");
 		}
 	}
 }

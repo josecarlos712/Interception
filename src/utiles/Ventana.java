@@ -67,7 +67,7 @@ public class Ventana extends JFrame {
 
 		// Build the first menu.
 		menu = new JMenu("Programas");
-		menu.setMnemonic(KeyEvent.VK_P);
+		menu.setMnemonic(KeyEvent.VK_M);
 		menu.getAccessibleContext().setAccessibleDescription("Menu para elegir entre los programas");
 		menuBar.add(menu);
 
