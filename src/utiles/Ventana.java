@@ -16,6 +16,7 @@ import javax.swing.KeyStroke;
 import utiles.laminas.Lamina;
 import utiles.laminas.LaminaIni;
 import utiles.laminas.LaminaPruebas;
+import utiles.laminas.LaminaRenombrar;
 import utiles.laminas.LaminaTag;
 
 @SuppressWarnings("serial")
@@ -32,9 +33,9 @@ public class Ventana extends JFrame {
 	public Ventana(int x, int y, int width, int height) {
 		// Instanciacion de laminas
 		Cf.mapLam.put("inicial", new LaminaIni());
-		Cf.mapLam.put("intercepcion", null);
-		Cf.mapLam.put("tag", null);
-		Cf.mapLam.put("pruebas", null);
+		Cf.mapLam.put("intercepcion", new LaminaRenombrar());
+		Cf.mapLam.put("tag", new LaminaTag());
+		Cf.mapLam.put("pruebas", new LaminaPruebas());
 		crearMenu();
 		// Creacion de la ventana
 		this.setBounds(x, y, width, height);
@@ -56,8 +57,8 @@ public class Ventana extends JFrame {
 
 	public void setLamAct(Lamina lam) {
 		this.getContentPane().remove(Cf.lamAct);
-		this.getContentPane().add(lam);
 		Cf.lamAct = lam;
+		this.getContentPane().add(Cf.lamAct);
 		this.actualizarVentana();
 	}
 
@@ -80,11 +81,7 @@ public class Ventana extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				if (Cf.mapLam.get("tag") == null)
-					Cf.mapLam.put("tag", new LaminaTag());
 				Cf.ven.setLamAct(Cf.mapLam.get("tag"));
-
 			}
 		});
 		menu.add(menuItem);
@@ -97,10 +94,20 @@ public class Ventana extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				if (Cf.mapLam.get("pruebas") == null)
-					Cf.mapLam.put("pruebas", new LaminaPruebas());
 				Cf.ven.setLamAct(Cf.mapLam.get("pruebas"));
+			}
+		});
+		menu.add(menuItem);
+
+		menuItem = new JMenuItem("Inicio", KeyEvent.VK_I); // Crea una entrada en el menu desplegable
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.ALT_MASK)); // Crea un acceso rapido
+																								// de teclado
+		menuItem.getAccessibleContext().setAccessibleDescription("Volver al inicio");
+		menuItem.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Cf.ven.setLamAct(Cf.mapLam.get("inicial"));
 			}
 		});
 		menu.add(menuItem);
