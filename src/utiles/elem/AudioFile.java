@@ -34,32 +34,27 @@ public class AudioFile {
 		else
 			this.tag = new ID3v2_3();
 		// Path tags
-		String aux = file.getName().split(" - ")[1];
-		System.out.println("Path: " + aux);
-		this.pathTitle = aux.substring(0, aux.indexOf("."));
-		this.pathArtist = file.getName().split("-")[0].trim();
-		aux.substring(aux.indexOf(".") + 1);
-
-		System.out.println("pathRute: " + this.path);
-		System.out.println("pathTitle: " + this.pathTitle);
-		System.out.println("pathArtist: " + this.pathArtist);
+		setPathTags();
+		/*	System.out.println("pathRute: " + this.path);
+			System.out.println("pathTitle: " + this.pathTitle);
+			System.out.println("pathArtist: " + this.pathArtist);*/
 
 		readTag();
 	}
 
 	public void readTag() {
-		System.out.println("------------readTags()-------------");
+		//System.out.println("------------readTags()-------------");
 
 		this.title = this.tag.getSongTitle();
 		this.album = this.tag.getAlbumTitle();
 		this.artist = this.tag.getLeadArtist();
 
-		System.out.println("Title: " + this.title);
-		System.out.println("Album: " + this.album);
-		System.out.println("Artist: " + this.artist);
-		// System.out.println("tag: " + this.tag.toString());
-		System.out.println("------------------------------------");
-		System.out.println("------------------------------------");
+		/*	System.out.println("Title: " + this.title);
+			System.out.println("Album: " + this.album);
+			System.out.println("Artist: " + this.artist);
+			// System.out.println("tag: " + this.tag.toString());
+			System.out.println("------------------------------------");
+			System.out.println("------------------------------------");*/
 	}
 
 	public void sync() throws IOException, TagException { // Sincroniza la etiqueta creada con el archivo y lo guarda
@@ -105,5 +100,25 @@ public class AudioFile {
 
 	public String getNameFile() {
 		return this.file.getName();
+	}
+
+	private void setPathTags() {
+		try {
+			String aux = file.getName().split(" - ")[1];
+			System.out.println("Path: " + aux);
+			try {
+				this.pathTitle = aux.substring(0, aux.indexOf("."));
+			} catch (StringIndexOutOfBoundsException | ArrayIndexOutOfBoundsException e) {
+				this.pathTitle = "ERROR!";
+			}
+			try {
+				this.pathArtist = file.getName().split("-")[0].trim();
+			} catch (StringIndexOutOfBoundsException | ArrayIndexOutOfBoundsException e) {
+				this.pathTitle = "ERROR!";
+			}
+		} catch (StringIndexOutOfBoundsException | ArrayIndexOutOfBoundsException e) {
+			this.pathTitle = file.getName().substring(0, file.getName().indexOf("."));
+			this.pathArtist = "Unknown";
+		}
 	}
 }

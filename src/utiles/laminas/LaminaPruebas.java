@@ -1,9 +1,11 @@
 package utiles.laminas;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -13,16 +15,18 @@ import utiles.elem.AreaTexto;
 
 @SuppressWarnings("serial")
 public class LaminaPruebas extends Lamina {
-	final int widthArea = 50, hightArea = 50;
+	//final int widthArea = 50, heightArea = 50;
+	int cont = 0;
 	// Paneles
-	private JPanel pgrl1 = new JPanel(), pgrl11 = new JPanel(), pgrl111 = new JPanel(), pgrl2 = new JPanel(),
-			pgrl12 = new JPanel();
+	private JPanel pgrl1 = new JPanel(), pgrl11 = new JPanel(), pgrl2 = new JPanel(), pgrl12 = new JPanel();
 	//
-	private JButton aceptarB = new JButton("Aceptar"), abrirB = new JButton("Abrir"), anadirEl = new JButton("Añadir");
-	private AreaTexto textArea = new AreaTexto(50, 50);
-	private List<String> l = new ArrayList<String>();
+	private JButton aceptarB = new JButton("Aceptar");
+	private AreaTexto textArea = new AreaTexto();
 
 	public LaminaPruebas() {
+
+		textArea.setEditable(false);
+		textArea.setPreferredSize(new Dimension(100, 500));
 
 		this.setLayout(new GridLayout(1, 2));
 		this.add(pgrl1); //
@@ -34,29 +38,20 @@ public class LaminaPruebas extends Lamina {
 
 		pgrl2.setLayout(new FlowLayout());
 
-		pgrl11.add(new JLabel("Ruta: "));
-		pgrl11.add(textArea);
-		pgrl11.add(abrirB);
-		pgrl11.add(anadirEl);
+		pgrl11.setLayout(new BorderLayout());
+		pgrl11.add(new JLabel("Ruta: "), BorderLayout.CENTER);
+		pgrl11.add(textArea, BorderLayout.CENTER);
 
 		pgrl2.add(aceptarB);
 
-		//Lista de Strings de prueba
-		l.add("HolaMundo1");
-		l.add("HolaMundo2");
-		l.add("HolaMundo3");
-		l.add("HolaMundo4");
-		//l.add("HolaMundo5");
-		l.add("HolaMundo6");
-		l.add("HolaMundo7");
-		l.add("HolaMundo8");
-		l.add("HolaMundo9");
-		//Fin de lista
+		aceptarB.addActionListener(new ActionListener() {
 
-		this.textArea.reemplazarLinea("HolaMundo linea 5", 5);
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				textArea.reemplazarLinea(cont + ". Linea " + (cont + 1) + "\n", cont);
+				cont += 20;
+			}
 
-		for (int i = 0; i < l.size(); i++) {
-			this.textArea.reemplazarLinea(i + ". " + l.get(i), i);
-		}
+		});
 	}
 }

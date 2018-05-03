@@ -13,12 +13,12 @@ public class Cf {
 	public static Lamina lamAct;
 	public static String ent1, ent2, out, saveDirectory;
 	public static JTextField mes;
-	public static boolean blankAlbum = true;
+	public static boolean albumBlanco = true, tagNominal = true;
 	public static Map<String, Lamina> mapLam = new HashMap<String, Lamina>();
 }
 
 /*
-  Error de IndexOutOfBoundsException en AreaTexto en separarEnLineas()
+
   
   
   
