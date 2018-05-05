@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import utiles.Cf;
 import utiles.Metodos;
 
-public class LaminaInter extends Lamina {
+public class LaminaInter extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField u1 = new JTextField("Entrada 1", 30), u2 = new JTextField("Entrada 2", 30),

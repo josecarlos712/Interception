@@ -22,7 +22,7 @@ import utiles.elem.AreaTexto;
 import utiles.elem.AudioFile;
 
 @SuppressWarnings("serial")
-public class LaminaTag extends Lamina {
+public class LaminaTag extends JPanel {
 	// Paneles
 	JPanel pgrl1 = new JPanel(), pgrl11 = new JPanel(), pgrl111 = new JPanel(), pgrl2 = new JPanel(),
 			pgrl12 = new JPanel(), pgrl2box = new JPanel();
@@ -125,8 +125,7 @@ public class LaminaTag extends Lamina {
 	private void anadirAudioList() {
 		List<File> f = Metodos.abrirArchivo(pgrl11);
 
-		for (int i = 0; i < f.size(); i++) {
-			File fp = f.get(i);
+		for (File fp : f) {
 			audioList.add(new AudioFile(fp.getAbsolutePath()));
 			textArea.añadirLinea(fp.getName());
 		}

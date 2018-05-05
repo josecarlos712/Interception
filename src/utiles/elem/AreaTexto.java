@@ -4,11 +4,18 @@ import java.awt.TextArea;
 
 public class AreaTexto extends TextArea {
 
-	public static final int MAXLINEAS = 500;
+	public int MAXLINEAS = 500;
 	public static boolean DELIMITADOR = false;
 	public static boolean enumeracion = true;
 	private static final long serialVersionUID = 1L;
 	protected String[] to = new String[MAXLINEAS];
+
+	public AreaTexto() {
+	}
+
+	public AreaTexto(int MAXLINEAS) {
+		this.MAXLINEAS = MAXLINEAS;
+	}
 
 	@SuppressWarnings("static-access")
 	public void reemplazarLinea(String str, int pos) {
@@ -58,5 +65,12 @@ public class AreaTexto extends TextArea {
 	public void limpiarTextArea() {
 		this.to = new String[MAXLINEAS];
 		this.refrescarTextArea();
+	}
+
+	public void borrarLinea(int linea) {
+		if (linea > 0 && linea < MAXLINEAS)
+			this.to[linea] = null;
+		else
+			throw new IllegalArgumentException("La linea a borrar debe estar en el rango [0," + (MAXLINEAS - 1) + "]");
 	}
 }

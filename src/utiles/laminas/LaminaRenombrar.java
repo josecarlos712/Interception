@@ -4,44 +4,59 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
+import utiles.Metodos;
 import utiles.elem.AreaTexto;
 
-public class LaminaRenombrar extends Lamina {
+public class LaminaRenombrar extends JPanel {
 
 	private static final long serialVersionUID = 3412494987256176885L;
-	private ButtonGroup groupRadio = new ButtonGroup(), groupB = new ButtonGroup();
+	private Box groupRadio = Box.createVerticalBox();
+	private ButtonGroup groupB = new ButtonGroup();
 	private JScrollPane jsp = new JScrollPane();
 	private GridBagConstraints cons = new GridBagConstraints();
-	private AreaTexto textArea = new AreaTexto();
+	private AreaTexto textArea = new AreaTexto(500);
 	private JButton BVis = new JButton("Visualizar"), BApl = new JButton("Aplicar"), BAbrir = new JButton("Abrir"),
-			BSalir = new JButton("Salir");
-	private JRadioButton[] radioButtons = new JRadioButton[100];
+			BAñadir = new JButton("Salir");
+	private JPanel radioPanel = new JPanel();
+	private List<File> files = new ArrayList<File>();
+	private List<JRadioButton> radioButtons = new ArrayList<JRadioButton>();
 
 	public LaminaRenombrar() {
 		this.setLayout(new GridBagLayout());
 
-		for (int i = 0; i < 10; i++) {
-			radioButtons[i] = new JRadioButton("Valor " + i);
-		}
+		/*for (int i = 0; i < 50; i++) {
+			radioButtons.add(new JRadioButton("Valor " + i));
+		}*/
+		radioButtons.add(new JRadioButton("Nombre(i)"));
+		radioButtons.add(new JRadioButton("Nombre (i)"));
+		radioButtons.add(new JRadioButton("Nombre i"));
+		radioButtons.add(new JRadioButton("Nombrei"));
 
 		groupB.add(BVis);
 		groupB.add(BApl);
 		groupB.add(BAbrir);
-		groupB.add(BSalir);
+		groupB.add(BAñadir);
 
 		for (JRadioButton comp : radioButtons) {
 			if (comp != null) {
-				jsp.add(comp);
+				radioPanel.add(comp);
 				groupRadio.add(comp);
 			}
 		}
 
+		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+		jsp.setViewportView(groupRadio);
 		textArea.setEditable(false);
 
 		cons.gridx = 0;
@@ -75,12 +90,29 @@ public class LaminaRenombrar extends Lamina {
 		this.add(BAbrir, cons);
 
 		cons.gridx = 2;
-		this.add(BSalir, cons);
+		this.add(BAñadir, cons);
 
 		BAbrir.addActionListener(new ActionListener() { // Limpia la lista existente y carga los MP3		
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				List<File> f = Metodos.abrirArchivo(radioPanel);
+				files = f;
+				textArea.limpiarTextArea();
+				for (File fp : f) {
+					textArea.añadirLinea(fp.getName());
+				}
+			}
+		});
 
+		BAñadir.addActionListener(new ActionListener() { // Limpia la lista existente y carga los MP3		
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				List<File> f = Metodos.abrirArchivo(radioPanel);
+
+				for (File fp : f) {
+					files.add(fp);
+					textArea.añadirLinea(fp.getName());
+				}
 			}
 		});
 	}

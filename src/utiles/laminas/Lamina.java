@@ -3,9 +3,6 @@ package utiles.laminas;
 import javax.swing.JPanel;
 
 public class Lamina extends JPanel {
-
+	public static String INICIAL = "inicial", TAGS = "tag", INTERCEPCION = "intercepcion", PRUEBAS = "pruebas",
+			PRUEBAS2 = "pruebas2";
 }
-
-// initial - Lamina que se carga al principio
-// interception - Lamina del programa intercepcion
-// tag - Lamina del programa de tags

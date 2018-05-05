@@ -4,18 +4,19 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
 
 import utiles.elem.BotonLamina;
 
-public class LaminaIni extends Lamina {
+public class LaminaIni extends JPanel {
 
 	private static final long serialVersionUID = -1144013840434754187L;
 	GridBagConstraints cons = new GridBagConstraints();
 
-	BotonLamina BTag = new BotonLamina(BotonLamina.TAGS, "Tags", new ImageIcon("images\\tag.png")),
-			BRen = new BotonLamina(BotonLamina.INTERCEPCION, "Renombrar", new ImageIcon("images\\rename.png")),
-			B3 = new BotonLamina(BotonLamina.PRUEBAS, "Pruebas 1", new ImageIcon("images\\pruebas.png")),
-			B4 = new BotonLamina(BotonLamina.PRUEBAS, "Pruebas 2", new ImageIcon("images\\pruebas.png"));
+	BotonLamina BTag = new BotonLamina(Lamina.TAGS, "Tags", new ImageIcon("images\\tag.png")),
+			BRen = new BotonLamina(Lamina.INTERCEPCION, "Renombrar", new ImageIcon("images\\rename.png")),
+			B3 = new BotonLamina(Lamina.PRUEBAS, "Pruebas 1", new ImageIcon("images\\pruebas.png")),
+			B4 = new BotonLamina(Lamina.PRUEBAS2, "Pruebas 2", new ImageIcon("images\\pruebas.png"));
 
 	public LaminaIni() {
 

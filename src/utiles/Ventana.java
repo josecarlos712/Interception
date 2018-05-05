@@ -10,13 +10,13 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 
-import utiles.laminas.Lamina;
 import utiles.laminas.LaminaIni;
+import utiles.laminas.LaminaInter;
 import utiles.laminas.LaminaPruebas;
-import utiles.laminas.LaminaRenombrar;
 import utiles.laminas.LaminaTag;
 
 @SuppressWarnings("serial")
@@ -33,15 +33,16 @@ public class Ventana extends JFrame {
 	public Ventana(int x, int y, int width, int height) {
 		// Instanciacion de laminas
 		Cf.mapLam.put("inicial", new LaminaIni());
-		Cf.mapLam.put("intercepcion", new LaminaRenombrar());
-		Cf.mapLam.put("tag", new LaminaTag());
-		Cf.mapLam.put("pruebas", new LaminaPruebas());
+		Cf.mapLam.put("intercepcion", null);
+		Cf.mapLam.put("tag", null);
+		Cf.mapLam.put("pruebas", null);
+		Cf.mapLam.put("pruebas2", null);
 		crearMenu();
+		Cf.lamAct = Cf.mapLam.get("inicial");
 		// Creacion de la ventana
 		this.setBounds(x, y, width, height);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setTitle(this.title);
-		Cf.lamAct = Cf.mapLam.get("inicial");
 		this.add(Cf.lamAct);
 		this.setJMenuBar(menuBar);
 		this.setVisible(true);
@@ -52,14 +53,7 @@ public class Ventana extends JFrame {
 	}
 
 	public Ventana() {
-		this(0, 0, 1200, 500);
-	}
-
-	public void setLamAct(Lamina lam) {
-		this.getContentPane().remove(Cf.lamAct);
-		Cf.lamAct = lam;
-		this.getContentPane().add(Cf.lamAct);
-		this.actualizarVentana();
+		this(0, 500, 1200, 500);
 	}
 
 	public void crearMenu() {
@@ -81,7 +75,7 @@ public class Ventana extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Cf.ven.setLamAct(Cf.mapLam.get("tag"));
+				Cf.ven.setLamAct("tag");
 			}
 		});
 		menu.add(menuItem);
@@ -94,7 +88,7 @@ public class Ventana extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Cf.ven.setLamAct(Cf.mapLam.get("pruebas"));
+				Cf.ven.setLamAct("pruebas");
 			}
 		});
 		menu.add(menuItem);
@@ -107,7 +101,7 @@ public class Ventana extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Cf.ven.setLamAct(Cf.mapLam.get("inicial"));
+				Cf.ven.setLamAct("inicial");
 			}
 		});
 		menu.add(menuItem);
@@ -118,5 +112,32 @@ public class Ventana extends JFrame {
 		Rectangle b = this.getBounds();
 		this.setBounds(b.x, b.y, b.height - 1, b.width - 1);
 		this.setBounds(b);
+	}
+
+	public void setLamAct(String lam) {
+		this.getContentPane().remove(Cf.lamAct);
+		if (Cf.mapLam.get(lam) == null)
+			Cf.mapLam.put(lam, Ventana.crearLamina(lam));
+		Cf.lamAct = Cf.mapLam.get(lam);
+		this.add(Cf.lamAct);
+		this.actualizarVentana();
+	}
+
+	public static JPanel crearLamina(String lam2) {
+		// TODO Auto-generated method stub
+		switch (lam2) {
+		case "inicial":
+			return new LaminaIni();
+		case "tag":
+			return new LaminaTag();
+		case "intercepcion":
+			return new LaminaInter();
+		case "pruebas":
+			return new LaminaPruebas();
+		case "pruebas2":
+			return new JPanel();
+		default:
+			return null;
+		}
 	}
 }
