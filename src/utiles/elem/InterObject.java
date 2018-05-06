@@ -1,6 +1,8 @@
-package ultiles.elem;
+package utiles.elem;
 
 import java.awt.Component;
+import java.awt.Container;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -8,33 +10,31 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-class InterObj extends Component implements MouseMotionListener, MouseListener {
+public class InterObject extends Component implements MouseMotionListener, MouseListener {
 
 	private static final long serialVersionUID = 1L;
-	private static InterCuadricula rej;
-	private JPanel con;
-	private InterObj inter;
-	private int pos;
-	private List<InterObj> intObjs;
+	private InterObject inter;
+	private int x, y, pos;
+	private JPanel pcomp;
+	private Component comp;
+	private List<InterObject> intObjs;
 
-	public InterObj(List<InterObj> intObjs, int pos, JPanel con) {
-		this(intObjs, pos, con, rej);
+	public InterObject(Container con, List<InterObject> intObjs, int pos, Component comp, InterCuadricula rej) {
 		this.pos = pos;
-		this.con = con;
 		this.intObjs = intObjs;
-		addMouseMotionListener(this);
-		addMouseListener(this);
-	}
-
-	public InterObj(List<InterObj> intObjs, int pos, JPanel con, InterCuadricula rej) {
-		super();
+		this.comp = comp;
+		//	this.pcomp = this.getComponente();
+		con.add(comp);
+		comp.addMouseMotionListener(this);
+		comp.addMouseListener(this);
+		this.x = rej.x + rej.pasox * pos;
+		this.y = rej.y + rej.pasoy * pos;
 	}
 
 	public void mouseDragged(MouseEvent e) {
 
-		setLocation(this.getX() + e.getX() - this.getWidth() / 2, this.getY() + e.getY() - this.getHeight() / 2);
-
-		intersects(intObjs, this);
+		setLocation(e.getX(), e.getY());
+		intersects(intObjs);
 
 	}
 
@@ -44,7 +44,6 @@ class InterObj extends Component implements MouseMotionListener, MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -82,37 +81,57 @@ class InterObj extends Component implements MouseMotionListener, MouseListener {
 					f = i;
 			}
 			if (f != -1 && o != -1) {
-				InterObj aux = intObjs.get(f);
+				InterObject aux = intObjs.get(f);
 				setInterObj(f, intObjs.get(o));
 				setInterObj(o, aux);
 				//System.out.println("Se han intercambiado los botones " + this.getText() + " y " + inter.getText());
 			} else
 				setInterObj(o, intObjs.get(o));
 		} else
-			this.setBounds(40, pos * 40, 100, 30);
+			setLocation(x, y);
 
 	}
 
-	public void setInter(InterObj b) {
+	public void setInter(InterObject b) {
 		this.inter = b;
 	}
 
-	public boolean intersects(List<InterObj> objs, InterObj myButton) {
+	public boolean intersects(List<InterObject> objs) {
 		// TODO Auto-generated method stub
-		for (InterObj b : intObjs) {
-			if (b != myButton) {
-				if (b.getBounds().intersects(myButton.getBounds())) {
-					myButton.setInter(b);
+		for (InterObject b : intObjs) {
+			if (b != this) {
+				if (b.getBoudns().intersects(this.getBounds())) {
+					this.setInter(b);
 					return true;
 				}
 			}
 		}
-		myButton.setInter(null);
+		this.setInter(null);
 		return false;
 	}
 
-	public void setInterObj(int i, InterObj b) {
+	private Rectangle getBoudns() {
+		// TODO Auto-generated method stub
+		return this.comp.getBounds();
+	}
+
+	public void setInterObj(int i, InterObject b) {
 		intObjs.set(i, b);
-		b.setBounds(40, i * 40, 100, 30);
+		setLocation(40, i * 40);
+	}
+
+	public void setLocation(int x, int y) {
+		//pcomp.setLocation(x, y);
+		comp.setLocation(x, y);
+	}
+
+	public Component getComponente() {
+		return comp;
+	}
+}
+
+class PanelTemporal extends JPanel {
+	public PanelTemporal(Component comp) {
+		this.add(comp);
 	}
 }

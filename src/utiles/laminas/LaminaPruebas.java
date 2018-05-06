@@ -77,7 +77,7 @@ class PanelInter extends JPanel implements MouseMotionListener, MouseListener {
 		this.add(label);
 		this.width = this.getBounds().width;
 		this.height = this.getBounds().height;
-		System.out.println(name + ": " + width + "x" + height);
+		//System.out.println(name + ": " + width + "x" + height);
 	}
 
 	@Override
@@ -92,13 +92,6 @@ class PanelInter extends JPanel implements MouseMotionListener, MouseListener {
 				this.getY() + e.getY() - this.getHeight() / 2
 
 		);
-		/*this.xmouse = e.getX();
-		this.ymouse = e.getY();
-		this.x = e.getX() - this.getX();
-		this.y = e.getY() - this.getY();
-		System.out.println(name + "[" + x + "," + y + "]");
-		this.setBounds(this.x - this.xmouse, this.y - this.ymouse, this.width, this.height);
-		this.repaint();*/
 	}
 
 	@Override

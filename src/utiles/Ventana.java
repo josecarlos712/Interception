@@ -17,6 +17,7 @@ import javax.swing.KeyStroke;
 import utiles.laminas.LaminaIni;
 import utiles.laminas.LaminaInter;
 import utiles.laminas.LaminaPruebas;
+import utiles.laminas.LaminaPruebas2;
 import utiles.laminas.LaminaTag;
 
 @SuppressWarnings("serial")
@@ -135,7 +136,7 @@ public class Ventana extends JFrame {
 		case "pruebas":
 			return new LaminaPruebas();
 		case "pruebas2":
-			return new JPanel();
+			return new LaminaPruebas2();
 		default:
 			return null;
 		}
