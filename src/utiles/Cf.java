@@ -13,7 +13,7 @@ public class Cf {
 	public static String ent1, ent2, out, saveDirectory;
 	public static JTextField mes;
 	public static boolean albumBlanco = true, tagNominal = true;
-	public static Map<String, JPanel> mapLam = new HashMap<String, JPanel>();
+	public static Map<Integer, JPanel> mapLam = new HashMap<Integer, JPanel>();
 
 }
 

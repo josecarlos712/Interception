@@ -14,10 +14,12 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.KeyStroke;
 
+import utiles.laminas.Lamina;
 import utiles.laminas.LaminaIni;
 import utiles.laminas.LaminaInter;
 import utiles.laminas.LaminaPruebas;
 import utiles.laminas.LaminaPruebas2;
+import utiles.laminas.LaminaRenombrar;
 import utiles.laminas.LaminaTag;
 
 @SuppressWarnings("serial")
@@ -33,13 +35,14 @@ public class Ventana extends JFrame {
 
 	public Ventana(int x, int y, int width, int height) {
 		// Instanciacion de laminas
-		Cf.mapLam.put("inicial", new LaminaIni());
-		Cf.mapLam.put("intercepcion", null);
-		Cf.mapLam.put("tag", null);
-		Cf.mapLam.put("pruebas", null);
-		Cf.mapLam.put("pruebas2", null);
+		Cf.mapLam.put(Lamina.INICIAL, new LaminaIni());
+		Cf.mapLam.put(Lamina.INTERCEPCION, null);
+		Cf.mapLam.put(Lamina.TAG, null);
+		Cf.mapLam.put(Lamina.PRUEBAS, null);
+		Cf.mapLam.put(Lamina.PRUEBAS2, null);
+		Cf.mapLam.put(Lamina.RENOMBRAR, null);
 		crearMenu();
-		Cf.lamAct = Cf.mapLam.get("inicial");
+		Cf.lamAct = Cf.mapLam.get(Lamina.INICIAL);
 		// Creacion de la ventana
 		this.setBounds(x, y, width, height);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,7 +57,7 @@ public class Ventana extends JFrame {
 	}
 
 	public Ventana() {
-		this(0, 500, 1200, 500);
+		this(0, 200, 1200, 500);
 	}
 
 	public void crearMenu() {
@@ -76,7 +79,6 @@ public class Ventana extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Cf.ven.setLamAct("tag");
 			}
 		});
 		menu.add(menuItem);
@@ -89,7 +91,7 @@ public class Ventana extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Cf.ven.setLamAct("pruebas");
+				Cf.ven.setLamAct(Lamina.PRUEBAS);
 			}
 		});
 		menu.add(menuItem);
@@ -102,7 +104,7 @@ public class Ventana extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				Cf.ven.setLamAct("inicial");
+				Cf.ven.setLamAct(Lamina.INICIAL);
 			}
 		});
 		menu.add(menuItem);
@@ -115,7 +117,7 @@ public class Ventana extends JFrame {
 		this.setBounds(b);
 	}
 
-	public void setLamAct(String lam) {
+	public void setLamAct(int lam) {
 		this.getContentPane().remove(Cf.lamAct);
 		if (Cf.mapLam.get(lam) == null)
 			Cf.mapLam.put(lam, Ventana.crearLamina(lam));
@@ -124,19 +126,21 @@ public class Ventana extends JFrame {
 		this.actualizarVentana();
 	}
 
-	public static JPanel crearLamina(String lam2) {
+	public static JPanel crearLamina(int lam2) {
 		// TODO Auto-generated method stub
 		switch (lam2) {
-		case "inicial":
+		case Lamina.INICIAL:
 			return new LaminaIni();
-		case "tag":
+		case Lamina.TAG:
 			return new LaminaTag();
-		case "intercepcion":
+		case Lamina.INTERCEPCION:
 			return new LaminaInter();
-		case "pruebas":
+		case Lamina.PRUEBAS:
 			return new LaminaPruebas();
-		case "pruebas2":
+		case Lamina.PRUEBAS2:
 			return new LaminaPruebas2();
+		case Lamina.RENOMBRAR:
+			return new LaminaRenombrar();
 		default:
 			return null;
 		}

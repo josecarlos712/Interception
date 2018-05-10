@@ -12,9 +12,9 @@ import utiles.Ventana;
 public class BotonLamina extends JButton implements ActionListener {
 
 	private static final long serialVersionUID = -2038536197794101371L;
-	private String lam;
+	private int lam;
 
-	public BotonLamina(String lamina, String name, ImageIcon img) {
+	public BotonLamina(int lamina, String name, ImageIcon img) {
 		super(name, img);
 		this.lam = lamina;
 		this.addActionListener(this);

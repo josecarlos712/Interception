@@ -21,14 +21,15 @@ import utiles.elem.AreaTexto;
 public class LaminaRenombrar extends JPanel {
 
 	private static final long serialVersionUID = 3412494987256176885L;
-	private Box groupRadio = Box.createVerticalBox();
-	private ButtonGroup groupB = new ButtonGroup();
-	private JScrollPane jsp = new JScrollPane();
+	private Box boxRadio = Box.createVerticalBox();
+	private ButtonGroup groupRadio = new ButtonGroup(), groupB = new ButtonGroup();
+	private JPanel radioPanel = new JPanel();
+	private JScrollPane jsp = new JScrollPane(radioPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+			JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	private GridBagConstraints cons = new GridBagConstraints();
 	private AreaTexto textArea = new AreaTexto(500);
 	private JButton BVis = new JButton("Visualizar"), BApl = new JButton("Aplicar"), BAbrir = new JButton("Abrir"),
 			BAñadir = new JButton("Salir");
-	private JPanel radioPanel = new JPanel();
 	private List<File> files = new ArrayList<File>();
 	private List<JRadioButton> radioButtons = new ArrayList<JRadioButton>();
 
@@ -49,14 +50,11 @@ public class LaminaRenombrar extends JPanel {
 		groupB.add(BAñadir);
 
 		for (JRadioButton comp : radioButtons) {
-			if (comp != null) {
-				radioPanel.add(comp);
-				groupRadio.add(comp);
-			}
+			radioPanel.add(comp);
+			groupRadio.add(comp);
+			boxRadio.add(comp);
 		}
 
-		jsp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-		jsp.setViewportView(groupRadio);
 		textArea.setEditable(false);
 
 		cons.gridx = 0;
