@@ -49,7 +49,7 @@ public class LaminaInter extends JPanel {
 		grl2p.add(luout); // Label "Salida"
 		grl2p.add(out); // Carpeta de salida Texto
 		grl2p.add(bout); // Boton para elegir carpeta de salida
-		grl2p.add(lmes); // Label "Mensaje"
+		grl2p.add(lmes); // Label "Mensaje" 
 		grl2p.add(Cf.mes); // Mensaje de informacion Texto
 		grl11p.add(lu1); // Label "Entrada 1"
 		grl11p.add(u1); // Carpeta de entrada 1 Texto

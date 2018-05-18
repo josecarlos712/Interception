@@ -36,7 +36,7 @@ public class LaminaRenombrar extends JPanel {
 	public LaminaRenombrar() {
 		this.setLayout(new GridBagLayout());
 
-		/*for (int i = 0; i < 50; i++) {
+		/*for (int i = 0; i < 50; i++) { 
 			radioButtons.add(new JRadioButton("Valor " + i));
 		}*/
 		radioButtons.add(new JRadioButton("Nombre(i)"));
@@ -95,7 +95,7 @@ public class LaminaRenombrar extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				List<File> f = Metodos.abrirArchivo(radioPanel);
 				files = f;
-				textArea.limpiarTextArea();
+				textArea.clean();
 				for (File fp : f) {
 					textArea.añadirLinea(fp.getName());
 				}

@@ -106,7 +106,7 @@ public class LaminaTag extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				audioList.clear();
-				textArea.limpiarTextArea();
+				textArea.clean();
 				anadirAudioList();
 			}
 		});
