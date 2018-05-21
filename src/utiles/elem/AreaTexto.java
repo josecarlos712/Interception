@@ -49,6 +49,12 @@ public class AreaTexto extends TextArea {
 		actualizar();
 	}
 
+	public void setTexto(final List<String> texto) {
+		clean();
+		for (final String line : texto)
+			this.añadirLinea(line);
+	}
+
 	public void actualizar() {
 		setText("");
 		for (final String line : to)
@@ -98,5 +104,9 @@ public class AreaTexto extends TextArea {
 	public List<String> getTexto() {
 		to = Arrays.asList(getText().split("\n"));
 		return to;
+	}
+
+	public String getTextoString() {
+		return getText();
 	}
 }

@@ -16,7 +16,7 @@ public class LaminaPruebas2 extends Lamina {
 	private final String pathRoute = "text/archivoPrueba.txt";
 	private final GridBagConstraints cons = new GridBagConstraints();
 	private final JButton añadir = new JButton("Añadir linea"), limpiar = new JButton("Limpiar"),
-			editar = new JButton("Editar"), linea = new JButton("Linea");
+			guardar = new JButton("Guardar");
 
 	public LaminaPruebas2() {
 
@@ -24,7 +24,7 @@ public class LaminaPruebas2 extends Lamina {
 
 		cons.gridx = 0;
 		cons.gridy = 0;
-		cons.gridheight = 4;
+		cons.gridheight = 3;
 		cons.gridwidth = 1;
 		cons.fill = GridBagConstraints.BOTH;
 		cons.weightx = 1.0;
@@ -45,21 +45,23 @@ public class LaminaPruebas2 extends Lamina {
 		add(limpiar, cons);
 
 		cons.gridy = 2;
-		add(editar, cons);
-
-		cons.gridy = 3;
-		add(linea, cons);
+		add(guardar, cons);
 
 		ArchivoTXT.crearNuevoArchivo = true;
 		archivo = new ArchivoTXT(pathRoute, areaTexto);
 
-		añadir.addActionListener(arg0 -> archivo.añadirLinea("Linea " + archivo.length()));
-		limpiar.addActionListener(arg0 -> archivo.limpiarTexto());
-		editar.addActionListener(arg0 -> {
+		añadir.addActionListener(e -> {
+			archivo.añadirLinea("Linea " + archivo.size());
+		});
+		limpiar.addActionListener(e -> {
+			archivo.limpiarTexto();
+			archivo.actualizarArchivo();
+		});
+		guardar.addActionListener(e -> {
 			archivo.getTexto();
+			System.out.println("Actualizando el archivo");
 			archivo.actualizarArchivo();
 		});
 
-		linea.addActionListener(arg0 -> archivo.añadirLineaEjemplo("HOla mundo"));
 	}
 }
