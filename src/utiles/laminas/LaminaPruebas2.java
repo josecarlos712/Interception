@@ -23,7 +23,7 @@ public class LaminaPruebas2 extends Lamina {
 		setLayout(new GridBagLayout());
 
 		cons.gridx = 0;
-		///Comentario
+
 		cons.gridy = 0;
 		cons.gridheight = 3;
 		cons.gridwidth = 1;
