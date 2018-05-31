@@ -22,7 +22,6 @@ public class ArchivoTXT extends Object {
 	private final AreaTexto areaTexto;
 	private boolean existe = true;
 	private final boolean CONSOLA = false;
-	private String textoej;
 	public static boolean crearNuevoArchivo = false;
 
 	public ArchivoTXT(final String path) {
@@ -87,8 +86,8 @@ public class ArchivoTXT extends Object {
 
 	public void añadirLinea(final String linea) {
 		if (areaTexto != null && existe) {
-			areaTexto.añadirLinea(linea);
 			texto.add(linea);
+			areaTexto.añadirLinea(linea);
 		}
 	}
 
@@ -127,17 +126,14 @@ public class ArchivoTXT extends Object {
 			e.printStackTrace();
 		}
 		pw = new PrintWriter(writer);
-		pw.print(textoej);
+		pw.print(getTexto());
 		pw.flush();
 		pw.close();
-		//System.out.println("Numero de lineas: " + size());
-		//	System.out.println("Numero de caracteres: " + length());
 	}
 
-	public List<String> getTexto() {
-		textoej = areaTexto.getTextoString();
-		//areaTexto.setTexto(texto);
-		return texto;
+	public String getTexto() {
+		texto = areaTexto.getTexto();
+		return areaTexto.getTextoString();
 	}
 
 	public void setTexto(final List<String> texto) {
@@ -145,9 +141,8 @@ public class ArchivoTXT extends Object {
 	}
 
 	public void limpiarTexto() {
-		texto.clear();
+		texto = new ArrayList<>();
 		areaTexto.clean();
-		areaTexto.actualizar();
 	}
 
 	public void limpiarArchivo() {

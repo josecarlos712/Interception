@@ -1,8 +1,14 @@
 package utiles.elem;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.TextArea;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AreaTexto extends TextArea {
@@ -11,8 +17,9 @@ public class AreaTexto extends TextArea {
 	private boolean DELIMITADOR = false, ENUMERACION = true, CONSOLA = false;
 	private final boolean EDITABLE = false;
 	private static final long serialVersionUID = 1L;
-
 	protected List<String> to = new ArrayList<>();
+	private String texto = "";
+	private Font fuente;
 
 	public AreaTexto() {
 		//this.setPreferredSize(new Dimension(500, 400));
@@ -55,14 +62,22 @@ public class AreaTexto extends TextArea {
 			this.añadirLinea(line);
 	}
 
+	public void setTexto(final String texto) {
+		final List<String> text = new LinkedList<>(Arrays.asList(texto.split("\n")));
+		text.stream().forEach(x -> this.añadirLinea(x));
+	}
+
 	public void actualizar() {
-		setText("");
-		for (final String line : to)
-			if (line != null)
-				if (CONSOLA)
+		texto = "";
+		to.stream().forEach(x -> texto += x + "\n");
+		if (CONSOLA)
+			for (final String line : to) {
+				if (line != null)
 					System.out.println(line);
-				else
-					append(line + "\n");
+			}
+		else
+			setText(texto);
+
 	}
 
 	public String getLine(final int pos) {
@@ -71,6 +86,7 @@ public class AreaTexto extends TextArea {
 
 	public void clean() {
 		to = new ArrayList<>();
+
 		actualizar();
 	}
 
@@ -102,11 +118,31 @@ public class AreaTexto extends TextArea {
 	}
 
 	public List<String> getTexto() {
-		to = Arrays.asList(getText().split("\n"));
+		to = new ArrayList<>();
+		Arrays.asList(getText().split("\n")).stream().forEach(x -> to.add(x));
+		if (to.size() > 0)
+			if (to.get(0) == "")
+				return to = new ArrayList<>();
 		return to;
 	}
 
 	public String getTextoString() {
+		getTexto(); //Actualiza /to/  
 		return getText();
+	}
+
+	public void setFuente(final Font fuente) {
+		setFont(fuente.deriveFont(12f));
+	}
+
+	public void setFuente(final String pathFont, final float size) {
+		try {
+			fuente = Font.createFont(Font.PLAIN, new BufferedInputStream(new FileInputStream(pathFont)));
+		} catch (FontFormatException | IOException e) {
+			System.out.println("No se ha podio leer el archivo " + pathFont);
+			e.printStackTrace();
+		}
+		setFont(fuente);
+		setFont(fuente.deriveFont(size));
 	}
 }

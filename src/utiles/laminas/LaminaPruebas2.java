@@ -13,7 +13,7 @@ public class LaminaPruebas2 extends Lamina {
 	private static final long serialVersionUID = 1L;
 	private final AreaTexto areaTexto = new AreaTexto();
 	private final ArchivoTXT archivo;
-	private final String pathRoute = "text/archivoPrueba.txt";
+	private final String pathRoute = "text/archivoPrueba.txt", pathFont = "fonts/trashco.ttf";
 	private final GridBagConstraints cons = new GridBagConstraints();
 	private final JButton añadir = new JButton("Añadir linea"), limpiar = new JButton("Limpiar"),
 			guardar = new JButton("Guardar");
@@ -34,6 +34,8 @@ public class LaminaPruebas2 extends Lamina {
 		areaTexto.setEnumeracion(false);
 		areaTexto.setConsola(false);
 		areaTexto.setEditable(true);
+		areaTexto.setFuente(pathFont, 24f);
+		System.out.println("Fuente: " + areaTexto.getFont().toString());
 
 		cons.gridheight = 1;
 		cons.gridx = 1;
@@ -54,7 +56,7 @@ public class LaminaPruebas2 extends Lamina {
 			archivo.añadirLinea("Linea " + archivo.size());
 		});
 		limpiar.addActionListener(e -> {
-			archivo.limpiarTexto();
+			archivo.limpiarArchivo();
 			archivo.actualizarArchivo();
 		});
 		guardar.addActionListener(e -> {
