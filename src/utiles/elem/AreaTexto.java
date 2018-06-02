@@ -13,12 +13,14 @@ import java.util.List;
 
 public class AreaTexto extends TextArea {
 
-	public int MAXLINEAS = 100;
-	private boolean DELIMITADOR = false, ENUMERACION = true, CONSOLA = false;
+	public int MAXLINEAS = 500; //Numero maximo de lineas permitidas en el documento
+	private boolean DELIMITADOR = false, //Si esta a true aparece un delimitador al final del texto
+			ENUMERACION = true, //Si esta a true aprarece una enumeracion de lineas ("n. Texto")
+			CONSOLA = false; //Para modo depuracion, aparece el texto del AreaTexto en la consola cada vez que se actualiza este
 	private final boolean EDITABLE = false;
 	private static final long serialVersionUID = 1L;
-	protected List<String> to = new ArrayList<>();
-	private String texto = "";
+	protected List<String> to = new ArrayList<>(); //ArrayList de lineas de texto
+	private String texto = ""; //Texto del ArrayList /to/ en un solo String
 	private Font fuente;
 
 	public AreaTexto() {
@@ -26,14 +28,14 @@ public class AreaTexto extends TextArea {
 		setEditable(EDITABLE);
 	}
 
-	public AreaTexto(final int MAXLINEAS) {
+	public AreaTexto(final int MAXLINEAS) { //Contructor que establece un numero de lineas maximo distinto al predefinido
 		this();
 		this.MAXLINEAS = MAXLINEAS;
 
 	}
 
-	@SuppressWarnings("static-access")
-	public void añadirLinea(final int pos, final String str) {
+	public void añadirLinea(final int pos, final String str) { //Reemplaza una linea en la posicion /pos/ por /str/
+																//si la posicion no existe rellena con "" hasta llegar a la linea /pos/
 		if (pos < 0)
 			throw new IllegalArgumentException("Has introducido un numero negativo en reemplazarLinea(" + pos + ")");
 		else if (pos < MAXLINEAS - 1) {
@@ -51,18 +53,19 @@ public class AreaTexto extends TextArea {
 			throw new IllegalArgumentException("El texto no puede exceder las " + MAXLINEAS + " lineas; pos: " + pos);
 	}
 
-	public void añadirLinea(final String str) {
+	public void añadirLinea(final String str) { //Añade una linea al final del documento
 		to.add(str);
 		actualizar();
 	}
 
-	public void setTexto(final List<String> texto) {
+	public void setTexto(final List<String> texto) { //Borra el AreaTexto y establece el texto /texto/
 		clean();
 		for (final String line : texto)
 			this.añadirLinea(line);
 	}
 
-	public void setTexto(final String texto) {
+	public void setTexto(final String texto) { //Crea un nuevo ArrayList segun el split "\n" de /texto/ y lo establece en AreaTexto
+		clean();
 		final List<String> text = new LinkedList<>(Arrays.asList(texto.split("\n")));
 		text.stream().forEach(x -> this.añadirLinea(x));
 	}
@@ -142,7 +145,12 @@ public class AreaTexto extends TextArea {
 			System.out.println("No se ha podio leer el archivo " + pathFont);
 			e.printStackTrace();
 		}
+		fuente = fuente.deriveFont(size);
 		setFont(fuente);
-		setFont(fuente.deriveFont(size));
+	}
+
+	public void setTamañoFuente(final float size) {
+		fuente = fuente.deriveFont(size);
+		setFont(fuente);
 	}
 }
